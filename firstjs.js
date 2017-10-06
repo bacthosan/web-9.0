@@ -53,8 +53,9 @@ function print2() {
 }
 print2();
 // const print = () => {
-  //  
+  //
 // }
 // const print = function() {
 //
 // }
+  
