@@ -2,7 +2,7 @@
 function random(min, max) {
   return Math.round( Math.random() * ( max - min) +  min ) ;
 }
-
+// let obj = JSON.parse(string);
 function generate(numberOfTestcases, filePath = "./test-data.json"){
   var fs =require("fs");
   var ans = "";
