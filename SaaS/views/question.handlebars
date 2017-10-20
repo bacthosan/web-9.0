@@ -12,5 +12,10 @@
         <span>YES: {{yes}}</span>
         <span>NO: {{no}}</span>
     </div>
+    <form  action="/resultQuestion" method="post">
+      <input type="radio" name = "yes" value= {{id}} >YES<br>
+      <input type="radio" name = "no" value= {{id}} >NO <br>
+      <input type="submit" value="Submit">
+    </form>
   </body>
 </html>

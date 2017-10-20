@@ -6,7 +6,7 @@ const path = require('path');
 const viewRouter = require('./viewRouter');
 const questionRouter = require('./questionRouter');
 const fileController = require('./fileController');
-
+const editAnswer = require('./editAnswer');
 let app = express();
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -24,11 +24,8 @@ app.get('/about',(req,res)=>{
   res.render("about");
 })
 app.use('/ask', viewRouter);
-// app.post('/question',(req,res)=>{
-//   console.log(req.body);
-//   res.redirect('/');
-// })
 app.use('/question',questionRouter);
+app.use('/resultQuestion',editAnswer);
 app.listen(6969,(err)=>{
   if ( err ) {
     console.log(err);
@@ -36,9 +33,11 @@ app.listen(6969,(err)=>{
     console.log("website is up");
   }
 })
-//   console.log(Math.floor((Math.random() * 10) + 1 ));
-
-// router.post('/',(req,res)=>{
-//   res.render("question");
+// app.post('/question',(req,res)=>{
 //   console.log(req.body);
+//   res.redirect('/');
+// })
+
+// app.get('/resultQuestion',(req,res)=>{
+//   res.render("resultQuestion");
 // })

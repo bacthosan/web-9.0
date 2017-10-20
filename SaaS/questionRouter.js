@@ -3,47 +3,45 @@ const router = express.Router();
 const fileController = require('./fileController');
 const outputFileName = "question.json";
 
-router.get('/', (req, res) => {
-  //TO DO
-  //get 1 random question
-  //render question with template
-  let questionList = fileController.readDataFromFile(outputFileName);
-
-  let question = questionList[0];
-
-  res.render("question",
-    {
-      question: question.question,
-      yes: question.yes,
-      no: question.no,
-      layout: "test"
-    });
-});
-
-//TO DO get question with id
-//localhost:6969/question/:id
-router.get('/:question', (req, res) => {
-  console.log(req.query);
-  res.send(req.params);
-});
-
-router.post('/', (req, res) => {
-  let questionList = [];
+var questionList = new Array();
+var num;
+router.get('/',(req,res)=>{
   try {
     questionList = fileController.readDataFromFile(outputFileName);
   } catch (ex) {
     console.log(ex);
     //questionList = [];
   }
+  num = Math.floor(Math.random() * questionList.length);
+  var question = questionList[num];
+  res.render("question",{
+    question: question.question,
+    yes: question.yes,
+    no: question.no,
+    id: question.id,
+    layout: "main"
+  });
+})
 
-  let newQuestion = {
-    question : req.body.question,
+router.post('/',(req,res)=>{
+  try {
+    questionList = fileController.readDataFromFile(outputFileName);
+  } catch (ex) {
+    console.log(ex);
+    //questionList = [];
+  }
+  // console.log(req.body);
+  let s = JSON.stringify(req.body);
+  var newQuestion = {
+    question: s,
     yes: 0,
-    no: 0
-  };
+    no: 0,
+    id: questionList.length
+  }
   questionList.push(newQuestion);
   fileController.writeDataToFile(outputFileName, questionList);
-  res.redirect('/');
-});
+  fileController.writeDataToFile("idQuestion.json", questionList.length-1);
+  res.redirect("/resultQuestion");
+})
 
 module.exports = router;
