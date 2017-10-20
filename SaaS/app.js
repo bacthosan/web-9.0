@@ -1,34 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const exphbs  = require('express-handlebars');
+const path = require('path');
+
 const viewRouter = require('./viewRouter');
-const questionRouter =
-const fs = require("fs");
+const questionRouter = require('./questionRouter');
+const fileController = require('./fileController');
+
 let app = express();
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 app.use(bodyParser.urlencoded({ extended : true } ) );
+
 app.get('/',(req,res)=>{
-  res.sendFile(__dirname + "/public/menu.html")
-})
-app.get('/home',(req,res)=>{
-  res.sendFile(__dirname + "/public/index.html")
+  res.render("home");
 })
 app.get('/style.css',(req,res)=>{
   res.sendFile(__dirname + "/public/style.css")
 })
 app.get('/about',(req,res)=>{
-  res.sendFile(__dirname + "/public/cv.html")
+  res.render("about");
 })
-app.post('/postabout',(req,res)=>{
-  res.sendFile(__dirname+"/public/index.html");
-  // res.send(req.body);
-})
-/*
-  read file question listen
-  if error -> question list = [];
-  success => question list = [question1,2,3,4]
-  question list push {question : req.body.question, yes:0,no: 0 }
-  save file
-*/
 app.use('/ask', viewRouter);
+// app.post('/question',(req,res)=>{
+//   console.log(req.body);
+//   res.redirect('/');
+// })
+app.use('/question',questionRouter);
 app.listen(6969,(err)=>{
   if ( err ) {
     console.log(err);
@@ -36,3 +36,9 @@ app.listen(6969,(err)=>{
     console.log("website is up");
   }
 })
+//   console.log(Math.floor((Math.random() * 10) + 1 ));
+
+// router.post('/',(req,res)=>{
+//   res.render("question");
+//   console.log(req.body);
+// })
