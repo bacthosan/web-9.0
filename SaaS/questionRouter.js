@@ -41,7 +41,10 @@ router.post('/',(req,res)=>{
   questionList.push(newQuestion);
   fileController.writeDataToFile(outputFileName, questionList);
   fileController.writeDataToFile("idQuestion.json", questionList.length-1);
-  res.redirect("/resultQuestion");
+  redirectString = fileController.readDataFromFile("idQuestion.json");
+  redirectString = "/resultQuestion/" + redirectString;
+  res.redirect(redirectString);
+  // res.redirect("/resultQuestion");
 })
 
 module.exports = router;
