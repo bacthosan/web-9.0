@@ -19,7 +19,7 @@ router.get('/',(req,res)=>{
     yes: question.yes,
     no: question.no,
     id: question.id,
-    layout: "main"
+    // layout: "main"
   });
 })
 

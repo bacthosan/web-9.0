@@ -14,11 +14,12 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended : true } ) );
 
-app.get('/',(req,res)=>{
-  res.render("home");
-})
+// app.get('/',(req,res)=>{
+//   res.render("question");
+// })
+app.use('/',questionRouter);
 app.get('/style.css',(req,res)=>{
-  res.sendFile(__dirname + "/public/style.css")
+  res.sendFile(__dirname + "/Public/style.css")
 })
 app.get('/about',(req,res)=>{
   res.render("about");
